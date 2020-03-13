@@ -2,6 +2,9 @@
 title: "pa_2"
 output: github_document
 ---
+```{r}
+library(tidyverse)
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -11,12 +14,20 @@ knitr::opts_chunk$set(echo = TRUE)
 set_1 = read.csv("data/data.csv")
 ```
 
+
 ```{r}
 set_2 = separate(data = set_1, col = info, into = c("verb", "stress"), sep = "-")
 ```
 
 ```{r}
-set_2
-group_by (stress)
-summarise(mean duration = mean(durationV), mean_f0 = mean(f0), mean intensity = mean(int)) 
+set_3 <- gather(data = set_2, key = stress, value = quantity, int, durationV, f0)
+
 ```
+
+```{r}
+set_3 %>%
+  group_by(stress) %>%
+  summarize(mean_duration = mean(quantity))
+```
+
+
